@@ -25,6 +25,13 @@ def generate_launch_description():
                 )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
     )
 
+    # THIS LINE IS TO LAUNCH JOYSTICK CONTROL. COMMENT HERE AND IN LAUNCH DESRIPTION TO DISABLE!!
+    joystick = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory(package_name),'launch','joystick.launch.py'
+                )]), launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
     gazebo_params_path = os.path.join(
                   get_package_share_directory(package_name),'config','gazebo_params.yaml')
 
@@ -59,6 +66,7 @@ def generate_launch_description():
     # Launch them all!
     return LaunchDescription([
         rsp,
+        joystick,
         gazebo,
         spawn_entity,
         diff_drive_spawner,
